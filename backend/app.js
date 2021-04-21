@@ -13,6 +13,9 @@ const signupRouter = require('./routes/signup');
 const logoutRouter = require('./routes/logout');
 const modifyRouter = require('./routes/modify');
 const deleteRouter = require('./routes/delete');
+const systemInfoRouter = require('./routes/systemInfo');
+
+const { verifyToken } = require('./my_modules/authorization')
 const app = express();
 
 // view engine setup
@@ -38,10 +41,12 @@ app.use(session({
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
-app.use('/logout', logoutRouter);
 app.use('/signup', signupRouter);
-app.use('/modify', modifyRouter);
-app.use('/delete', deleteRouter);
+//token 확인이 필요한 요청들
+app.use('/logout',verifyToken, logoutRouter);
+app.use('/modify',verifyToken, modifyRouter);
+app.use('/delete',verifyToken, deleteRouter);
+app.use('/systemInfo',verifyToken, systemInfoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

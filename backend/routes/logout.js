@@ -7,11 +7,11 @@ const mysqlDB = require('../my_modules/mysql-db');
 router.post('/', function(req, res, next) {
     try {
         req.session.destroy(()=>{
-            res.status(200).json({ status:'SUCCESS',message:'logout success'});
+            res.status(200).json({ message:'logout success'});
         });
     }
     catch (error) {
-        res.status(500).json({ status:'FAILED',message:'server has some problem...'});
+        res.status(500).json({ message:'server has some problem...'});
     }
 });
 

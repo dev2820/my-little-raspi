@@ -35,11 +35,11 @@ router.post('/', async function(req, res, next) {
 		datas.push(user_id+'');
         const [rows,fields] = await connection.query(`UPDATE users SET name=?,email=?,${req.body.password?'password=?':''} WHERE id=?`,datas);
         connection.release();
-		res.status(200).json({ status:'SUCCESS',message:'modify success'});
+		res.status(200).json({ message:'modify success'});
     }
 	catch(err) {
         console.error(`modify failed: ${err.message}`);
-		res.status(500).json({ status:'FAILED',message:'server has some problem...'});
+		res.status(500).json({ message:'server has some problem...'});
     }
 });
 

@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const myhash = require('../my_modules/pbkdf2');
 const mysqlDB = require('../my_modules/mysql-db');
@@ -18,6 +19,7 @@ router.post('/', async function(req, res, next) {
 	else {
 		const user_id = req.body.id || null;
 		const unhashed_password = req.body.password || null;
+		const JWTKEY = process.env.JWTSECRET
 		try {
 			//open mariaDB
 			const connection = await mysqlDB.getConnection(async conn => conn);
@@ -29,24 +31,18 @@ router.post('/', async function(req, res, next) {
 			else {
 				const hashedPassword = await myhash.pbkdf2Hasing(unhashed_password,rows[0].salt)
 				if(hashedPassword === rows[0].password) {
-					//session 설정
-					if(!req.session.user) {
-						req.session.user = {
-							"id": rows[0].id,
-							"name": rows[0].name,
-							"email": rows[0].email,
-							"logined_time": new Date(),
-						}
-						req.session.save(()=>{
-							res.status(200).json({ status:'SUCCESS',message:'login success'});
-						})
-					}
-					else {
-						res.status(200).json({ status:'SUCCESS',message:'login success'});
-					}
+					//jwt token 생성
+					const token = jwt.sign({
+						userID: rows[0].id,
+						loginTime: new Date()
+					}, JWTKEY, {
+						expiresIn: '1h'
+					});
+					res.cookie('user',token);
+					res.status(201).json({ token, message:'login success'});
 				}
 				else {
-					res.status(400).json({ status:'FAILED',message:'password incorrect'});
+					res.status(400).json({ message:'password incorrect'});
 				}
 			}
 		}

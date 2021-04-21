@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const myhash = require('../my_modules/pbkdf2');
 const mysqlDB = require('../my_modules/mysql-db');
@@ -17,6 +18,7 @@ router.post('/', async (req, res, next) => {
     const user_name = req.body.name || null;
     const user_email = req.body.email || null;
     const unhashed_password = req.body.password || null;
+    const JWTKEY = process.env.JWTSECRET
 	if(!user_id == null) {
         res.json({ status:'FAILED',message:'need id'});
     }
@@ -34,12 +36,19 @@ router.post('/', async (req, res, next) => {
         const query = `INSERT INTO users(id,name,email,password,salt) VALUES(?,?,?,?,?)`
         const [rows,fields] = await connection.query(query,[user_id+'',user_name+'',user_email+'',user_password+'',user_salt+'']);
         connection.release();//연결 종료
-
-        res.status(200).json({ status:'SUCCESS',message:'signup success'});
+        //jwt token 생성
+        const token = jwt.sign({
+            userID: rows[0].id,
+            loginTime: new Date()
+        }, JWTKEY, {
+            expiresIn: '1h'
+        });
+        res.cookie('user',token);
+        res.status(201).json({ token,message:'signup success'});
     }
     catch(err) {
         console.error(`signup failed: ${err.message}`);
-		res.status(500).json({ status:'FAILED',message:'server has some problem...'});
+		res.status(500).json({ message:'server has some problem...'});
     }
     
 });
