@@ -1,0 +1,17 @@
+<a href="/login">
+    go to login page
+</a>
+doesn't work yet
+<form action="/modify" method="post">
+    user: <input type="text" name="id" value="<%=id%>" readonly><br/>
+    new password:<input type="password" name="password"><br/>
+    name: <input type="text" name="name" value="<%=name%>"><br/>
+    email: <input type="text" name="email" value="<%=email%>"><br/>
+    <input type="submit" value="modify">
+</form>
+
+<form action="/delete" method="POST">
+    <input type="text" name="id" value="<%=id%>" readonly style="visibility:hidden"><br/>
+    password for delete:<input type="password" name="password"><br/>
+    <input type="submit" value="delete">
+</form>
