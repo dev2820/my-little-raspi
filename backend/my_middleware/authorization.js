@@ -11,7 +11,7 @@ const verifyToken = (req, res, next) => {
             next();
         }
         else {
-            res.status(401).json({ error: 'unauthorized'});
+            res.status(401).json({ message: 'unauthorized'});
         }
     }
     catch (error) {
@@ -20,4 +20,3 @@ const verifyToken = (req, res, next) => {
 }
 
 exports.verifyToken = verifyToken;
-

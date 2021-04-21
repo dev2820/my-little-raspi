@@ -1,23 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const myhash = require('../my_modules/pbkdf2');
-const mysqlDB = require('../my_modules/mysql-db');
+const myhash = require('../../my_modules/pbkdf2');
+const mysqlDB = require('../../my_modules/mysql-db');
 
-/* GET users login. test page 
-router.get('/', function(req, res, next) {
-	if(!req.session.user) {
-		res.redirect('/login');
-	}
-	console.log(req.session.user.id);
-	res.render('modify', {
-        id: req.session.user.id,
-        name: req.session.user.name,
-        email: req.session.user.email
-    });
-});
+/*  POST users modify
+    미완성된 라우터
 */
-/* POST users login. */
-router.post('/', async function(req, res, next) {
+module.exports = async function(req, res, next) {
 	const user_id = req.body.id;
     const user_name = req.body.name;
 	const user_email = req.body.email;
@@ -41,6 +30,5 @@ router.post('/', async function(req, res, next) {
         console.error(`modify failed: ${err.message}`);
 		res.status(500).json({ message:'server has some problem...'});
     }
-});
+}
 
-module.exports = router;

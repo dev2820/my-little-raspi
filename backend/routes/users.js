@@ -1,9 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const usersController = require('./usersController')
+const { verifyToken } = require('../my_middleware/authorization')
+/* login request (READ)*/
+router.post('/login', usersController.login);
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+/* signup request (CREATE) */
+router.post('/signup', usersController.signup);
+
+/* modify request (MODIFY)*/
+router.post('/modify',verifyToken, usersController.modify);
+
+/* delete request (DELETE)*/
+router.post('/signout',verifyToken, usersController.signout);
 
 module.exports = router;

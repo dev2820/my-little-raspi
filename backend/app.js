@@ -8,14 +8,15 @@ require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const loginRouter = require('./routes/login');
-const signupRouter = require('./routes/signup');
-const logoutRouter = require('./routes/logout');
-const modifyRouter = require('./routes/modify');
-const deleteRouter = require('./routes/delete');
+const loginRouter = require('./routes/usersController/login');
+const signupRouter = require('./routes/usersController/signup');
+const logoutRouter = require('./routes/usersController/logout');
+const modifyRouter = require('./routes/usersController/modify');
+const deleteRouter = require('./routes/usersController/signout');
 const systemInfoRouter = require('./routes/systemInfo');
 
-const { verifyToken } = require('./my_modules/authorization')
+const 
+const { verifyToken } = require('./my_middleware/authorization')
 const app = express();
 
 // view engine setup
@@ -38,14 +39,9 @@ app.use(session({
   }
 }));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/login', loginRouter);
-app.use('/signup', signupRouter);
-//token 확인이 필요한 요청들
-app.use('/logout',verifyToken, logoutRouter);
-app.use('/modify',verifyToken, modifyRouter);
-app.use('/delete',verifyToken, deleteRouter);
+app.use('/', indexRouter);//메인 페이지 요청
+
+app.use('/users', usersRouter);//회원 정보 관리 요청은 users router로 뺌
 app.use('/systemInfo',verifyToken, systemInfoRouter);
 
 // catch 404 and forward to error handler
