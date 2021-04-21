@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "@/components/views/Home.vue";
 import Login from "@/components/views/Login.vue";
 import Signup from "@/components/views/Signup.vue";
-
+import Cookie from '../my_modules/myCookie';
 const routes = [
   {
     path: "/",
@@ -26,10 +26,10 @@ const router = createRouter({
   routes,
 });
 router.beforeEach((to, from, next)=> {
-    //home으로 이동하기 전 session 확인 후 이동
-    const session = sessionStorage.getItem('user') || null;
+    //home으로 이동하기 전 cookie 확인 후 이동
+    const logined = Cookie.getCookie('user') || null;
     if(to.path==='/login' || to.path==='/signup') {
-        if(session) {
+        if(logined) {
             next('/');
         }
         else {
@@ -37,9 +37,7 @@ router.beforeEach((to, from, next)=> {
         }
     }
     else {
-      console.log(sessionStorage,session)
-        if(session) {
-            console.log(session);
+        if(logined) {
             next();
         }
         else {

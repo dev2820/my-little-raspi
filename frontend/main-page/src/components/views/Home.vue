@@ -14,7 +14,7 @@
 </template>
 
 <script>
-
+import Cookie from '../../my_modules/myCookie'
 export default {
     name:"Home",
     data() {
@@ -24,12 +24,9 @@ export default {
         }
     },
     methods: {
-        async logout() {
+        logout() {
             try {
-                const response = await this.$http.post('/logout');
-                if(response.status===200) {
-                    this.$router.push({ path:'/login'});
-                }
+                Cookie.deleteCookie('user');
             }
             catch(error) {
                 console.error('logout failed:',error);
