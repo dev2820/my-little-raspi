@@ -8,14 +8,8 @@ require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const loginRouter = require('./routes/usersController/login');
-const signupRouter = require('./routes/usersController/signup');
-const logoutRouter = require('./routes/usersController/logout');
-const modifyRouter = require('./routes/usersController/modify');
-const deleteRouter = require('./routes/usersController/signout');
 const systemInfoRouter = require('./routes/systemInfo');
 
-const 
 const { verifyToken } = require('./my_middleware/authorization')
 const app = express();
 
