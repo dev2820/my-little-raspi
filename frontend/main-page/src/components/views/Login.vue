@@ -34,7 +34,7 @@ export default {
             this.loginStatus = "ongoing";
             const response = await this.$store.dispatch('requestLogin',{id,password});
             if(response.status < 400) {
-                this.loginStatus = "success";
+                this.loginStatus = "";
                 setTimeout(()=>{
                     this.$router.push({ path:'/'});
                 },1000);
