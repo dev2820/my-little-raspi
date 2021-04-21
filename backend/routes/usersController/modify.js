@@ -1,5 +1,4 @@
 const express = require('express');
-const router = express.Router();
 const myhash = require('../../my_modules/pbkdf2');
 const mysqlDB = require('../../my_modules/mysql-db');
 
