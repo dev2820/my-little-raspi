@@ -8,7 +8,7 @@ export default {
             id:payload.id,
             password:payload.password
         }
-        const response = await axios.post('/login', data);
+        const response = await axios.post('/users/login', data);
     },
     async requestSignup({state}, payload) {
         const data = {
@@ -17,6 +17,6 @@ export default {
             password:payload.password,
             email:payload.email
         }
-        const response = await axios.post('/signup', data);
+        const response = await axios.post('/users/signup', data);
     }
 }
