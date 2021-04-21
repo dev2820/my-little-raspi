@@ -31,13 +31,16 @@ export default {
     },
     methods: {
         async login(id,password) {
-            try {
-                const response = await this.$http.post('/login', {id,password});
-                this.$router.push({ path: '/' });
+            this.loginStatus = "ongoing";
+            const response = await this.$store.dispatch('requestLogin',{id,password});
+            if(response.status < 400) {
+                this.loginStatus = "success";
+                setTimeout(()=>{
+                    this.$router.push({ path:'/'});
+                },1000);
             }
-            catch(error){
-                this.loginStatus="failed";
-                console.error('login failed:',error);
+            else {
+                this.loginStatus = "failed";
             }
         }
     }

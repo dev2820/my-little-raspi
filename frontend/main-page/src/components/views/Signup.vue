@@ -65,8 +65,8 @@ export default {
                     password:info.password,
                     email:info.email
                 }
-                const response = await this.$http.post('/signup', data);
-                if(response.status === 200) {
+                const response = await this.$store.dispatch('requestSignup', data)
+                if(response.status < 400) {
                     this.loginStatus = "success";
                     setTimeout(()=>{
                         this.$router.push({ path:'/'});
