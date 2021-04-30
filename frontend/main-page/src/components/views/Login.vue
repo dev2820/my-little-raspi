@@ -34,14 +34,14 @@ export default {
             this.loginStatus = "ongoing";
             try {
                 const response = await this.$store.dispatch('requestLogin',{id,password});
-                console.log(response);
-                if(response.status == 200) {
+                if(response.status === 201) {
                     this.loginStatus = "";
                     this.$router.push({ path:'/'});
                 }
             }
             catch (error) {
                 this.loginStatus = "failed";
+                console.error('login failed:',error);
             }
         }
     }

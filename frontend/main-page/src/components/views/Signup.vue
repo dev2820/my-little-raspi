@@ -5,7 +5,7 @@
             <router-link to="/">Home</router-link>
         </header>
         <main>
-            signup
+            signup {{requestStatus}}
             <div class="form">
                 <label>
                     이름
@@ -14,6 +14,7 @@
                 <label>
                     아이디
                     <input type="text" name="id" v-model="id">
+                    <button @click="requestUniqueIdCheck(id)">중복확인</button>
                 </label>
                 <label>
                     비밀번호
@@ -28,11 +29,11 @@
                     이메일
                     <input type="email" name="email" v-model="email">
                 </label>
-                <button @click="signup({name,id,password,passwordAgain,email})">signup</button>
+                <button @click="requestSignup({name,id,password,passwordAgain,email})">signup</button>
             </div>
         </main>
         <footer>
-
+            footer
         </footer>
     </div>
 </template>
@@ -48,17 +49,32 @@ export default {
             password:"",
             passwordAgain:"",
             email:"",
-            loginStatus:""
+            requestStatus:"",
+            isUniqueId:false
         }
     },
     methods: {
-        async signup(info) {
-            if(info.passwordAgain !== info.password) {
-                confirm("비밀번호가 일치하지 않습니다.");
-                return;
-            }
+        async requestUniqueIdCheck(id) {
             try {
-                this.loginStatus = "ongoing";
+                const response = await this.$store.dispatch('requestUniqueIdCheck', id);
+                if(response.status === 201) {
+                    confirm('사용 가능한 아이디입니다!');
+                    this.isUniqueId = true;
+                }
+            }
+            catch(error){
+                confirm('사용 불가능한 아이디입니다.');
+                this.isUniqueId = false;
+            }
+        },
+        async requestSignup(info) {
+            if(passwordEqualCheck(info.password,info.passwordAgain)) { return; }
+            if(isUniqueId === false) {
+                confirm('아이디 중복을 확인해 주십시오.');
+                return; 
+            }
+            this.requestStatus = "ongoing";
+            try {
                 const data = {
                     name:info.name,
                     id:info.id,
@@ -66,18 +82,27 @@ export default {
                     email:info.email
                 }
                 const response = await this.$store.dispatch('requestSignup', data)
-                if(response.status < 400) {
-                    this.loginStatus = "success";
+                if(response.status === 201) {
+                    this.requestStatus = "success";
                     this.$router.push({ path:'/'});
-                }
-                else {
-                    this.loginStatus = "failed";
                 }
             }
             catch(error){
+                this.requestStatus = "failed";
                 console.error('signup failed:',error);
             }
-        }
+        },
+        passwordEqualCheck(password,passwordAgain) {
+            if(password!=='') {
+                confirm("비밀번호를 입력해 주십시오.");
+                return false;
+            }
+            if(password !== passwordAgain) {
+                confirm("비밀번호가 일치하지 않습니다.");
+                return false;
+            }
+            return true;
+        },
     }
 }
 </script>

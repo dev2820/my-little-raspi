@@ -18,5 +18,11 @@ export default {
             email:payload.email
         }
         return await axios.post('/users/signup', data);
+    },
+    async requestUniqueIdCheck({state},payload) {
+        const data = {
+            id:payload
+        }
+        return await axios.post('/users/isuniqueid', data);
     }
 }
