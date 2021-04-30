@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const logger = require('morgan');
 const cors = require('cors');
+const helmet = require('helmet');
+const hpp = require('hpp');
 require('dotenv').config();
 
 const indexRouter = require('./routes/index');
@@ -20,6 +22,8 @@ app.set('view engine', 'ejs');
 
 if(process.env.NODE_ENV === 'production') {
   app.use(logger('combined'));
+  app.use(helmet());
+  app.use(hpp());
 }
 else {
   app.use(logger('dev'));
