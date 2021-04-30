@@ -93,16 +93,18 @@ export default {
             }
         },
         passwordEqualCheck(password,passwordAgain) {
-            if(password!=='') {
+            if(!password) {
                 confirm("비밀번호를 입력해 주십시오.");
                 return false;
             }
-            if(password !== passwordAgain) {
+            else if(password !== passwordAgain) {
                 confirm("비밀번호가 일치하지 않습니다.");
                 return false;
             }
-            return true;
-        },
+            else { 
+                return true;
+            }
+        }
     }
 }
 </script>
