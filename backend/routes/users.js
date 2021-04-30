@@ -8,6 +8,9 @@ router.post('/login', usersController.login);
 /* signup request (CREATE) */
 router.post('/signup', usersController.signup);
 
+/* isuniqueid request */
+router.post('/isuniqueid', usersController.isuniqueid);
+
 /* modify request (MODIFY)*/
 router.post('/modify',verifyToken, usersController.modify);
 
