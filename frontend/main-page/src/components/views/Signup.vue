@@ -68,7 +68,8 @@ export default {
             }
         },
         async requestSignup(info) {
-            if(this.passwordEqualCheck(info.password,info.passwordAgain)) { return; }
+            const isPasswordEqual = this.passwordEqualCheck(info.password,info.passwordAgain);
+            if(isPasswordEqual === false) { return; }
             if(this.isUniqueId === false) {
                 confirm('아이디 중복을 확인해 주십시오.');
                 return; 
