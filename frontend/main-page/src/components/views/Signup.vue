@@ -68,9 +68,7 @@ export default {
                 const response = await this.$store.dispatch('requestSignup', data)
                 if(response.status < 400) {
                     this.loginStatus = "success";
-                    setTimeout(()=>{
-                        this.$router.push({ path:'/'});
-                    },1000);
+                    this.$router.push({ path:'/'});
                 }
                 else {
                     this.loginStatus = "failed";

@@ -32,14 +32,15 @@ export default {
     methods: {
         async login(id,password) {
             this.loginStatus = "ongoing";
-            const response = await this.$store.dispatch('requestLogin',{id,password});
-            if(response.status < 400) {
-                this.loginStatus = "";
-                setTimeout(()=>{
+            try {
+                const response = await this.$store.dispatch('requestLogin',{id,password});
+                console.log(response);
+                if(response.status == 200) {
+                    this.loginStatus = "";
                     this.$router.push({ path:'/'});
-                },1000);
+                }
             }
-            else {
+            catch (error) {
                 this.loginStatus = "failed";
             }
         }
