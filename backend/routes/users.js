@@ -21,7 +21,7 @@ router.post('/signout',verifyToken, usersController.signout);
 router.get('/getuserinfo',verifyToken, usersController.getuserinfo);
 
 /* passwordcheck request (READ)*/
-router.get('/passwordcheck',verifyToken, usersController.passwordcheck);
+router.post('/passwordcheck',verifyToken, usersController.passwordcheck);
 
 
 module.exports = router;
