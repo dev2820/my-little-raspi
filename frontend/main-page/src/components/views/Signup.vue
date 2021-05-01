@@ -58,19 +58,19 @@ export default {
             try {
                 const response = await this.$store.dispatch('requestUniqueIdCheck', id);
                 if(response.status === 201) {
-                    success();
+                    success('사용 가능한 아이디입니다!');
                 }
             }
             catch(error){
-                failed();
+                failed('사용 불가능한 아이디입니다.');
             }
         },
         successUniqueIdCheck() {
-            confirm('사용 가능한 아이디입니다!');
+            if(message) confirm(message);
             this.isUniqueId = true;
         },
         failedUniqueIdCheck() {
-            confirm('사용 불가능한 아이디입니다.');
+            if(message) confirm(message);
             this.isUniqueId = false;
         },
         async requestSignup(info,success,failed) {
@@ -106,10 +106,11 @@ export default {
         },
         successSignup(){
             this.requestStatus = "success";
+            if(message) confirm(message);
             this.$router.push({ path:'/'});
         },
         failedSignup(message){
-            confirm(message);
+            if(message) confirm(message);
             this.requestStatus = "failed";
         }
     }
