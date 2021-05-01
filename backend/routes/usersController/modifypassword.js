@@ -10,7 +10,7 @@ module.exports = async function(req, res, next) {
         //open mariaDB
         const connection = await mysqlDB.getConnection(async conn => conn);
         const [rows,fields] = await connection.query(`SELECT password,salt FROM users WHERE ID LIKE ?;`,[user_id+'']);
-		if(rows.length<1) {
+		if(rows.length === 1) {
             const user_salt = rows[0].salt;
             const hashedPassword = await myhash.pbkdf2Hasing(user_old_password,user_salt);
             if(hashedPassword === rows[0].password) {
