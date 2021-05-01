@@ -20,4 +20,8 @@ router.post('/signout',verifyToken, usersController.signout);
 /* getuserinfo request (READ)*/
 router.get('/getuserinfo',verifyToken, usersController.getuserinfo);
 
+/* passwordcheck request (READ)*/
+router.get('/getuserinfo',verifyToken, usersController.passwordcheck);
+
+
 module.exports = router;

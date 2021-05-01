@@ -4,6 +4,7 @@ const signout = require('./signout');
 const modify = require('./modify'); 
 const isuniqueid = require('./isuniqueid'); 
 const getuserinfo = require('./getuserinfo'); 
+const passwordcheck = require('./passwordcheck'); 
 
 module.exports = {
     login,
@@ -11,5 +12,6 @@ module.exports = {
     signout,
     modify,
     isuniqueid,
-    getuserinfo
+    getuserinfo,
+    passwordcheck
 }

@@ -1,6 +1,3 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const myhash = require('../../my_modules/pbkdf2');
 const mysqlDB = require('../../my_modules/mysql-db');
 
 module.exports = async function(req, res, next) {
