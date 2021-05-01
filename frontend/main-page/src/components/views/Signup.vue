@@ -65,11 +65,11 @@ export default {
                 failed('사용 불가능한 아이디입니다.');
             }
         },
-        successUniqueIdCheck() {
+        successUniqueIdCheck(message) {
             if(message) confirm(message);
             this.isUniqueId = true;
         },
-        failedUniqueIdCheck() {
+        failedUniqueIdCheck(message) {
             if(message) confirm(message);
             this.isUniqueId = false;
         },
@@ -104,7 +104,7 @@ export default {
                 throw new Error("비밀번호가 일치하지 않습니다.");
             }
         },
-        successSignup(){
+        successSignup(message){
             this.requestStatus = "success";
             if(message) confirm(message);
             this.$router.push({ path:'/'});
