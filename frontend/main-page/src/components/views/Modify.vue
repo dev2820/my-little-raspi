@@ -58,7 +58,6 @@ export default {
             }
         },
         async requestUserInfo(success,failed) {
-            const info = {};
             try {
                 const response = await this.$store.dispatch('requestUserInfo');
                 success(response.data);
@@ -80,7 +79,7 @@ export default {
                     password:info.password,
                     email:info.email
                 }
-                const response = await this.$store.dispatch('requestSignup', data);
+                const response = await this.$store.dispatch('requestModifyUserInfo', data);
                 if(response.status === 201) {
                     success();
                 }
