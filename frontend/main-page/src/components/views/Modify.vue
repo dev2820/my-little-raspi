@@ -76,7 +76,7 @@ export default {
             }
         },
         async requestModifyUserInfo(info,success,failed) {
-            this.requestStatus = "ongoing";
+            this.requestModifyInfoStatus = "ongoing";
             try {
                 const data = {
                     name:info.name,
@@ -93,7 +93,7 @@ export default {
             }
         },
         async requestModifyPassword(info,success,failed) {
-            this.requestStatus = "ongoing";
+            this.requestModifyPwStatus = "ongoing";
             try {
                 const isPasswordEqual = this.passwordEqualCheck(info.newPassword,info.passwordAgain);
                 if(isPasswordEqual === false) { throw new Error('password is not equal'); }
