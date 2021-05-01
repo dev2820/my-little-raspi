@@ -4,9 +4,6 @@ const mysqlDB = require('../../my_modules/mysql-db');
 
 /*  POST users modify */
 module.exports = async function(req, res, next) {
-    if(res.locals.userID) {//이미 로그인된 유저
-		res.json(400,{ status:'FAILED', message: 'you already logined' });
-	}
 	const user_id = res.locals.userID;
     const user_name = req.body.name;
 	const user_email = req.body.email;

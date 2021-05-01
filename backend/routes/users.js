@@ -17,4 +17,7 @@ router.post('/modify',verifyToken, usersController.modify);
 /* delete request (DELETE)*/
 router.post('/signout',verifyToken, usersController.signout);
 
+/* getuserinfo request (READ)*/
+router.post('/getuserinfo',verifyToken, usersController.getuserinfo);
+
 module.exports = router;

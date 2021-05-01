@@ -3,11 +3,13 @@ const signup = require('./signup');
 const signout = require('./signout'); 
 const modify = require('./modify'); 
 const isuniqueid = require('./isuniqueid'); 
+const getuserinfo = require('./getuserinfo'); 
 
 module.exports = {
     login,
     signup,
     signout,
     modify,
-    isuniqueid
+    isuniqueid,
+    getuserinfo
 }
