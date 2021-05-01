@@ -43,5 +43,11 @@ export default {
             newPassword: payload.newPassword,
         }
         return await axios.post('/users/modifypassword',data);
+    },
+    async requestSignout({state},payload) {
+        const data = {
+            password: payload.password,
+        }
+        return await axios.post('/users/signout',data);
     }
 }
