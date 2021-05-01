@@ -1,6 +1,6 @@
 const mysqlDB = require('../../my_modules/mysql-db');
 
-/*  POST users modify */
+/*  POST users info modify */
 module.exports = async function(req, res, next) {
 	const user_id = res.locals.userID;
     const user_name = req.body.name;
@@ -11,7 +11,7 @@ module.exports = async function(req, res, next) {
         //password change?
         const datas = [user_name+'',user_email+''];
 		datas.push(user_id+'');
-        const [rows,fields] = await connection.query(`UPDATE users SET name=?,email=? WHERE id=?`,datas);
+        await connection.query(`UPDATE users SET name=?,email=? WHERE id=?`,datas);
         connection.release();
 		res.status(201).json({ message:'modify success'});
     }

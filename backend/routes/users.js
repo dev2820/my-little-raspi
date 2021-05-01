@@ -11,8 +11,8 @@ router.post('/signup', usersController.signup);
 /* isuniqueid request */
 router.post('/isuniqueid', usersController.isuniqueid);
 
-/* modify request (MODIFY)*/
-router.post('/modify',verifyToken, usersController.modify);
+/* modifyuserinfo request (MODIFY)*/
+router.post('/modifyuserinfo',verifyToken, usersController.modifyuserinfo);
 
 /* delete request (DELETE)*/
 router.post('/signout',verifyToken, usersController.signout);
@@ -20,8 +20,8 @@ router.post('/signout',verifyToken, usersController.signout);
 /* getuserinfo request (READ)*/
 router.get('/getuserinfo',verifyToken, usersController.getuserinfo);
 
-/* passwordcheck request (READ)*/
-router.post('/passwordcheck',verifyToken, usersController.passwordcheck);
+/* modifypassword request (READ)*/
+router.post('/modifypassword',verifyToken, usersController.modifypassword);
 
 
 module.exports = router;
