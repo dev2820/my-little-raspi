@@ -92,7 +92,8 @@ export default {
                 }
             }
             catch(error){
-                failed(error.message);
+                if(error.response) failed(error.response.data.message);
+                else failed(error.message);
             }
         },
         passwordEqualCheck(password,passwordAgain) {
@@ -108,7 +109,7 @@ export default {
             this.$router.push({ path:'/'});
         },
         failedSignup(message){
-            comfirm(message);
+            confirm(message);
             this.requestStatus = "failed";
         }
     }
