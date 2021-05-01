@@ -35,7 +35,7 @@ export default {
             name:payload.name,
             email:payload.email
         }
-        return await axios.post('/users/modify',data);
+        return await axios.post('/users/modifyuserinfo',data);
     },
     async requestModifyPassword({state},payload) {
         const data = {
