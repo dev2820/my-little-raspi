@@ -95,14 +95,13 @@ export default {
         async requestModifyPassword(info,success,failed) {
             this.requestStatus = "ongoing";
             try {
-                await this.$store.dispatch('requestPasswordCheck',info.oldPassword);
                 const isPasswordEqual = this.passwordEqualCheck(info.newPassword,info.passwordAgain);
                 if(isPasswordEqual === false) { throw new Error('password is not equal'); }
                 const data = {
-                    name:info.name,
-                    email:info.email
+                    password:info.oldPassword,
+                    newPassword:info.newPassword
                 }
-                const response = await this.$store.dispatch('requestModifyUserInfo', data);
+                const response = await this.$store.dispatch('requestModifyPassword', data);
                 if(response.status === 201) {
                     success();
                 }
