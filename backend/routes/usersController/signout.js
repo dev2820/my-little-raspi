@@ -16,13 +16,15 @@ module.exports = async function(req, res, next) {
         if(hashedPassword !== rows[0].password) {
             res.json({ message:'password wrong'});
         }
-        await connection.query(`DELETE FROM users WHERE id = ?`,[user_id+'']);
+        else {
+            await connection.query(`DELETE FROM users WHERE id = ?`,[user_id+'']);
+            req.session.destroy();
+            res.status(201).json({ message:'signout success'});
+        }
         connection.release();
-		req.session.destroy();
-		res.status(200).json({ message:'signout success'});
     }  
     catch (err) {
         console.error(err.message);
-        res.status(400).json({ message:'signout failed...'});
+        res.status(400).json({ message:`signout failed: ${err.message}`});
     }  
 }
