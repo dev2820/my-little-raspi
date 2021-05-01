@@ -29,7 +29,7 @@ module.exports = async function(req, res, next) {
     }
 	catch(err) {
         console.error(`modify failed: ${err.message}`);
-		res.status(400).json({ message:'password modify failed...'});
+		res.status(400).json({ message:`password modify failed: ${err.message}...`});
     }
 }
 
