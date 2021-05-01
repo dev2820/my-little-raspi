@@ -66,7 +66,6 @@ export default {
                 failed();
                 console.error('logout failed:',error);
             }
-            return info;
         },
         async requestModifyUserInfo(info,success,failed) {
             this.requestStatus = "ongoing";
