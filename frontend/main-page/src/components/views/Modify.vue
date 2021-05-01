@@ -95,7 +95,7 @@ export default {
             try {
                 this.passwordEqualCheck(info.newPassword,info.passwordAgain);
                 const data = {
-                    password:info.oldPassword,
+                    oldPassword:info.oldPassword,
                     newPassword:info.newPassword
                 }
                 const response = await this.$store.dispatch('requestModifyPassword', data);
