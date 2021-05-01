@@ -41,6 +41,6 @@ export default {
         const data = {
             password: payload
         }
-        return await axios.post('/users/passwordCheck',data);
+        return await axios.post('/users/passwordcheck',data);
     }
 }
