@@ -2,11 +2,12 @@ const express = require('express');
 const myhash = require('../../my_modules/pbkdf2');
 const mysqlDB = require('../../my_modules/mysql-db');
 
-/*  POST users modify
-    미완성된 라우터
-*/
+/*  POST users modify */
 module.exports = async function(req, res, next) {
-	const user_id = req.body.id;
+    if(res.locals.userID) {//이미 로그인된 유저
+		res.json(400,{ status:'FAILED', message: 'you already logined' });
+	}
+	const user_id = res.locals.userID;
     const user_name = req.body.name;
 	const user_email = req.body.email;
     const user_password = req.body.password;
@@ -15,19 +16,19 @@ module.exports = async function(req, res, next) {
         const connection = await mysqlDB.getConnection(async conn => conn);
         //password change?
         const datas = [user_name+'',user_email+''];
-        if(req.body.password !== "") {
+        if(user_password !== "") {
             const [rows,fields] = await connection.query(`SELECT salt,password FROM users WHERE id LIKE ?`,[user_id+'']);
-            hashedPassword = await myhash.pbkdf2Hasing(req.body.password,rows[0].salt)
+            hashedPassword = await myhash.pbkdf2Hasing(user_password,rows[0].salt)
             datas.push(hashedPassword);
         }
 		datas.push(user_id+'');
-        const [rows,fields] = await connection.query(`UPDATE users SET name=?,email=?,${req.body.password?'password=?':''} WHERE id=?`,datas);
+        const [rows,fields] = await connection.query(`UPDATE users SET name=?,email=?${user_password?',password=?':''} WHERE id=?`,datas);
         connection.release();
-		res.status(200).json({ message:'modify success'});
+		res.status(201).json({ message:'modify success'});
     }
 	catch(err) {
         console.error(`modify failed: ${err.message}`);
-		res.status(500).json({ message:'server has some problem...'});
+		res.status(400).json({ message:'modify failed...'});
     }
 }
 
