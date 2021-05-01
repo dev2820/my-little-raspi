@@ -21,18 +21,21 @@ export default {
         }
     },
     mounted() {
-        const success = (info) => {
+        this.initUserInfo();
+    },
+    methods: {
+        initUserInfo() {
+            const success = (info) => {
             this.userInfo = info;
             this.id = info.id;
             this.name = info.name;
             this.email = info.email;
-        }
-        const failed = () => {
-            confirm('유저 정보를 불러오지 못했어요.')
-        }  
-        this.requestUserInfo(success,failed);
-    },
-    methods: {
+            }
+            const failed = () => {
+                confirm('유저 정보를 불러오지 못했어요.')
+            }  
+            this.requestUserInfo(success,failed);
+        },
         async requestUserInfo(success,failed) {
             try {
                 const response = await this.$store.dispatch('requestUserInfo');
@@ -60,6 +63,7 @@ export default {
         },
         success() {
             this.requestStatus = "success";
+            this.initUserInfo();
         },
         failed(message) {
             confirm(message);
