@@ -37,10 +37,11 @@ export default {
         }
         return await axios.post('/users/modify',data);
     },
-    async requestPasswordCheck({state},payload) {
+    async requestModifyPassword({state},payload) {
         const data = {
-            password: payload
+            oldPassword: payload.oldPassword,
+            newPassword: payload.newPassword,
         }
-        return await axios.post('/users/passwordcheck',data);
+        return await axios.post('/users/modifypassword',data);
     }
 }
