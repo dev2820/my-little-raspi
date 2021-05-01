@@ -7,12 +7,18 @@
         </header>
         <main>
             <div class="form">
+                사용자 정보
                 <label>user: <input type="text" name="id" v-model="id" readonly></label>
                 <label>name: <input type="text" name="name" v-model="name"></label>
                 <label>email: <input type="text" name="email" v-model="email"></label>
-                <label>new password:<input type="password" name="password" v-model="password"></label>
+                <button @click="requestModifyUserInfo({id,name,email},successModifyInfo,failedModifyInfo)">변경</button>{{requestModifyInfoStatus}}
+            </div>
+            <div class="form">
+                비밀번호 변경
+                <label>old password:<input type="password" name="password" v-model="oldPassword"></label>
+                <label>new password:<input type="password" name="password" v-model="newPassword"></label>
                 <label>new password again:<input type="password" name="password" v-model="passwordAgain"></label>
-                <button @click="requestModifyUserInfo({id,name,email,password,passwordAgain},successModify,failedModify)">정보 변경</button>{{requestStatus}}
+                <button @click="requestModifyPassword({oldPassword,newPassword,passwordAgain},successModifyPw,failedModifyPw)">변경</button>{{requestModifyPwStatus}}
             </div>
         </main>
         <footer>
@@ -30,10 +36,12 @@ export default {
         return {
             id:"",
             name:"",
-            password:"",
+            oldPassword:"",
+            newPassword:"",
             passwordAgain:"",
             email:"",
-            requestStatus:""
+            requestModifyInfoStatus:"",
+            requestModifyPwStatus:""
         }
     },
     mounted() {
@@ -70,12 +78,8 @@ export default {
         async requestModifyUserInfo(info,success,failed) {
             this.requestStatus = "ongoing";
             try {
-                const isPasswordEqual = this.passwordEqualCheck(info.password,info.passwordAgain);
-                if(isPasswordEqual === false) { throw new Error('password is not equal'); }
                 const data = {
-                    id:info.id,
                     name:info.name,
-                    password:info.password,
                     email:info.email
                 }
                 const response = await this.$store.dispatch('requestModifyUserInfo', data);
@@ -84,7 +88,27 @@ export default {
                 }
             }
             catch(error){
-                failed();
+                failed(error.message);
+                console.error('modify failed:',error);
+            }
+        },
+        async requestModifyPassword(info,success,failed) {
+            this.requestStatus = "ongoing";
+            try {
+                await this.$store.dispatch('requestPasswordCheck',info.oldPassword);
+                const isPasswordEqual = this.passwordEqualCheck(info.newPassword,info.passwordAgain);
+                if(isPasswordEqual === false) { throw new Error('password is not equal'); }
+                const data = {
+                    name:info.name,
+                    email:info.email
+                }
+                const response = await this.$store.dispatch('requestModifyUserInfo', data);
+                if(response.status === 201) {
+                    success();
+                }
+            }
+            catch(error){
+                failed(error.message);
                 console.error('modify failed:',error);
             }
         },
@@ -101,12 +125,19 @@ export default {
                 return true;
             }
         },
-        successModify() {
-            this.requestStatus = "success";
-            this.$router.push({ path:'/'});
+        successModifyInfo() {
+            this.requestModifyInfoStatus = "success";
         },
-        failedModify() {
-            this.requestStatus = "failed";
+        failedModifyInfo(message) {
+            confirm(message);
+            this.requestModifyInfoStatus = "failed";
+        },
+        successModifyPw() {
+            this.requestModifyPwStatus = "success";
+        },
+        failedModifyPw(message) {
+            confirm(message);
+            this.requestModifyPwStatus = "failed";
         },
     }
 }

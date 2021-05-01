@@ -32,11 +32,15 @@ export default {
     },
     async requestModifyUserInfo({state},payload) {
         const data = {
-            id:payload.id,
             name:payload.name,
-            password:payload.password,
             email:payload.email
         }
         return await axios.post('/users/modify',data);
+    },
+    async requestPasswordCheck({state},payload) {
+        const data = {
+            password: payload
+        }
+        return await axios.post('/users/passwordCheck',data);
     }
 }
