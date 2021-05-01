@@ -1,6 +1,6 @@
 <template>
     <div class="form">
-        {{name}}({{id}}) 님의 사용자 정보
+        <strong>{{userInfo.hasOwnProperty('name') || userInfo.name}}({{userInfo.hasOwnProperty('id') || userInfo.id}}) 님의 사용자 정보</strong>
         <label>user: <input type="text" name="id" v-model="id" readonly></label>
         <label>name: <input type="text" name="name" v-model="name"></label>
         <label>email: <input type="text" name="email" v-model="email"></label>
@@ -13,6 +13,7 @@ export default {
     name: "ModifyUserInfo",
     data() {
         return {
+            userInfo: {},
             id:"",
             name:"",
             email:"",
@@ -21,6 +22,7 @@ export default {
     },
     mounted() {
         const success = (info) => {
+            this.userInfo = info;
             this.id = info.id;
             this.name = info.name;
             this.email = info.email;

@@ -9,7 +9,7 @@
             회원정보/정보변경
             <modify-user-info class="card"></modify-user-info>
             <modify-password class="card"></modify-password>
-            <signout class="card"></signout>
+            <signout class="card" @logout="logout"></signout>
         </main>
         <footer>
 
@@ -26,9 +26,7 @@ import Signout from '../modules/Signout'
 export default {
     name:"Modify",
     data() {
-        return {
-            id:"",
-        }
+        return {}
     },
     components: {
         ModifyUserInfo,

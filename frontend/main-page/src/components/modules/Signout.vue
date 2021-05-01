@@ -1,8 +1,8 @@
 <template>
     <div class="form">
         회원탈퇴
-        <label>password:<input type="password" name="password" v-model="oldPassword"></label>
-        <button @click="requestSignout({password},success,failed)">변경</button>{{requestStatus}}
+        <label>password:<input type="password" name="password" v-model="password"></label>
+        <button @click="requestSignout({password},success,failed)">회원탈퇴</button>{{requestStatus}}
     </div>
 </template>
 
