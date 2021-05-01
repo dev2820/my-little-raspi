@@ -71,8 +71,7 @@ export default {
                 success(response.data);
             }
             catch (error) {
-                failed();
-                console.error('logout failed:',error);
+                failed(error.message);
             }
         },
         async requestModifyUserInfo(info,success,failed) {
@@ -89,14 +88,12 @@ export default {
             }
             catch(error){
                 failed(error.message);
-                console.error('modify failed:',error);
             }
         },
         async requestModifyPassword(info,success,failed) {
             this.requestModifyPwStatus = "ongoing";
             try {
-                const isPasswordEqual = this.passwordEqualCheck(info.newPassword,info.passwordAgain);
-                if(isPasswordEqual === false) { throw new Error('password is not equal'); }
+                this.passwordEqualCheck(info.newPassword,info.passwordAgain);
                 const data = {
                     password:info.oldPassword,
                     newPassword:info.newPassword
@@ -108,20 +105,14 @@ export default {
             }
             catch(error){
                 failed(error.message);
-                console.error('modify failed:',error);
             }
         },
         passwordEqualCheck(password,passwordAgain) {
-            if(!password) {
-                confirm("비밀번호를 입력해 주십시오.");
-                return false;
+            if(!password) { 
+                throw new Error("비밀번호를 입력해 주십시오.");
             }
-            else if(password !== passwordAgain) {
-                confirm("비밀번호가 일치하지 않습니다.");
-                return false;
-            }
-            else { 
-                return true;
+            else if(password !== passwordAgain) { 
+                throw new Error("비밀번호가 일치하지 않습니다.");
             }
         },
         successModifyInfo() {

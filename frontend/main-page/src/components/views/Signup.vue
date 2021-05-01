@@ -76,13 +76,9 @@ export default {
         async requestSignup(info,success,failed) {
             this.requestStatus = "ongoing";
             try {
-                const isPasswordEqual = this.passwordEqualCheck(info.password,info.passwordAgain);
-                if(isPasswordEqual === false) { 
-                    throw new Error('password is not equal'); 
-                }
+                this.passwordEqualCheck(info.password,info.passwordAgain);
                 if(this.isUniqueId === false) {
-                    confirm('아이디 중복을 확인해 주십시오.');
-                    throw new Error('duplicated id'); 
+                    throw new Error('아이디 중복을 확인해 주십시오.'); 
                 }
                 const data = {
                     name:info.name,
@@ -96,28 +92,23 @@ export default {
                 }
             }
             catch(error){
-                failed();
-                console.error('signup failed:',error);
+                failed(error.message);
             }
         },
         passwordEqualCheck(password,passwordAgain) {
             if(!password) {
-                confirm("비밀번호를 입력해 주십시오.");
-                return false;
+                throw new Error("비밀번호를 입력해 주십시오.");
             }
             else if(password !== passwordAgain) {
-                confirm("비밀번호가 일치하지 않습니다.");
-                return false;
-            }
-            else { 
-                return true;
+                throw new Error("비밀번호가 일치하지 않습니다.");
             }
         },
         successSignup(){
             this.requestStatus = "success";
             this.$router.push({ path:'/'});
         },
-        failedSignup(){
+        failedSignup(message){
+            comfirm(message);
             this.requestStatus = "failed";
         }
     }
