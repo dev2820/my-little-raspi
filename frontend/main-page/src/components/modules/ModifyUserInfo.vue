@@ -1,6 +1,6 @@
 <template>
     <div class="form">
-        <strong>{{userInfo.hasOwnProperty('name') || userInfo.name}}({{userInfo.hasOwnProperty('id') || userInfo.id}}) 님의 사용자 정보</strong>
+        <strong>{{userInfo.name || ''}}({{userInfo.id  || ''}}) 님의 사용자 정보</strong>
         <label>user: <input type="text" name="id" v-model="id" readonly></label>
         <label>name: <input type="text" name="name" v-model="name"></label>
         <label>email: <input type="text" name="email" v-model="email"></label>

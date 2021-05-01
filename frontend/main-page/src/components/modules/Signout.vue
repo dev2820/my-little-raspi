@@ -24,7 +24,7 @@ export default {
                 }
                 const response = await this.$store.dispatch('requestSignout', data);
                 if(response.status === 201) {
-                    success();
+                    success('회원탈퇴 되었습니다.');
                 }
             }
             catch(error){
@@ -32,8 +32,9 @@ export default {
                 else failed(error.message);
             }
         },
-        success() {
+        success(message) {
             this.requestStatus = "success";
+            confirm(message);
             this.$emit('logout');
         },
         failed(message) {
