@@ -18,6 +18,6 @@ router.post('/modify',verifyToken, usersController.modify);
 router.post('/signout',verifyToken, usersController.signout);
 
 /* getuserinfo request (READ)*/
-router.post('/getuserinfo',verifyToken, usersController.getuserinfo);
+router.get('/getuserinfo',verifyToken, usersController.getuserinfo);
 
 module.exports = router;
