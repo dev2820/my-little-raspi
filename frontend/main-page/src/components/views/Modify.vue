@@ -75,8 +75,8 @@ export default {
                 const isPasswordEqual = this.passwordEqualCheck(info.password,info.passwordAgain);
                 if(isPasswordEqual === false) { throw new Error('password is not equal'); }
                 const data = {
-                    name:info.name,
                     id:info.id,
+                    name:info.name,
                     password:info.password,
                     email:info.email
                 }

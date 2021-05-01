@@ -28,7 +28,7 @@ export default {
         return await axios.post('/users/isuniqueid', data);
     },
     async requestUserInfo({state}) {
-        return await axios.get('/users/getinfo');
+        return await axios.get('/users/getuserinfo');
     },
     async requestModifyUserInfo({state},payload) {
         const data = {
