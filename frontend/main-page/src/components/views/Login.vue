@@ -9,7 +9,7 @@
             <div class="form">
                 <input id="id" v-model="id">
                 <input id="pw" type="password" v-model="password">
-                <button @click="login(id,password)">submit</button>
+                <button @click="requestLogin({id,password},successLogin,failedLogin)">submit</button>
             </div>
         </main>
         <footer>
@@ -30,17 +30,23 @@ export default {
         }
     },
     methods: {
-        async login(id,password) {
+        successLogin() {
+            this.loginStatus = "";
+            this.$router.push({ path:'/'});
+        },
+        failedLogin() {
+            this.loginStatus = "failed";
+        },
+        async requestLogin(info,success,failed) {
             this.loginStatus = "ongoing";
             try {
-                const response = await this.$store.dispatch('requestLogin',{id,password});
+                const response = await this.$store.dispatch('requestLogin',info);
                 if(response.status === 201) {
-                    this.loginStatus = "";
-                    this.$router.push({ path:'/'});
+                    success();
                 }
             }
             catch (error) {
-                this.loginStatus = "failed";
+                failed();
                 console.error('login failed:',error);
             }
         }

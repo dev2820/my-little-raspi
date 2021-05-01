@@ -1,4 +1,6 @@
 import axios from 'axios'
+import myCookie from '@/my_modules/myCookie'
+
 export default {
     actionTest(state) {
         console.log('action Test function');
@@ -12,8 +14,8 @@ export default {
     },
     async requestSignup({state}, payload) {
         const data = {
-            name:payload.name,
             id:payload.id,
+            name:payload.name,
             password:payload.password,
             email:payload.email
         }
@@ -24,5 +26,17 @@ export default {
             id:payload
         }
         return await axios.post('/users/isuniqueid', data);
+    },
+    async requestUserInfo({state}) {
+        return await axios.get('/users/getinfo');
+    },
+    async requestModifyUserInfo({state},payload) {
+        const data = {
+            id:payload.id,
+            name:payload.name,
+            password:payload.password,
+            email:payload.email
+        }
+        return await axios.post('/users/modify',data);
     }
 }

@@ -3,9 +3,10 @@
         <header>
             <h1>Home</h1>
             <button @click="logout()">logout</button>
+            <router-link to="/modify">회원정보</router-link>
         </header>
         <main>
-            Here is Home. what can i do here?
+            Home
         </main>
         <footer>
 
