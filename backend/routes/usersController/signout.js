@@ -11,10 +11,10 @@ module.exports = async function(req, res, next) {
 	//open mariaDB
     try {
         const connection = await mysqlDB.getConnection(async conn => conn);
-        const [rows,fields] = await connection.query(`SELECT * FROM users WHERE id=?;`,[user_id+'']);
+        const [rows,fields] = await connection.query(`SELECT password,salt FROM users WHERE id=?;`,[user_id+'']);
         const hashedPassword = await myhash.pbkdf2Hasing(unhashed_password,rows[0].salt)
         if(hashedPassword !== rows[0].password) {
-            res.json({ message:'password wrong'});
+            throw new Error('password wrong');
         }
         else {
             await connection.query(`DELETE FROM users WHERE id = ?`,[user_id+'']);
