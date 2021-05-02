@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "@/components/views/Home.vue";
 import Login from "@/components/views/Login.vue";
 import Signup from "@/components/views/Signup.vue";
+import Modify from "@/components/views/Modify.vue";
 import Cookie from '../my_modules/myCookie';
 const routes = [
   {
@@ -19,12 +20,18 @@ const routes = [
     name: "Signup",
     component: Signup,
   },
+  {
+    path: "/modify",
+    name: "Modify",
+    component: Modify,
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
 router.beforeEach((to, from, next)=> {
     //home으로 이동하기 전 cookie 확인 후 이동
     const logined = Cookie.getCookie('user') || null;

@@ -1,4 +1,3 @@
-const express = require('express');
 const jwt = require('jsonwebtoken');
 const myhash = require('../../my_modules/pbkdf2');
 const mysqlDB = require('../../my_modules/mysql-db');
@@ -16,7 +15,7 @@ mysql -u root -p // 앞으로 접속 방법
 	성공시 토큰 발행
 */
 module.exports = async function(req, res, next) {
-	if(res.locals.userID) {
+	if(res.locals.userID) {//이미 로그인된 유저
 		res.json(400,{ status:'FAILED', message: 'you already logined' });
 	}
 	else {
@@ -29,7 +28,7 @@ module.exports = async function(req, res, next) {
 			const [rows,fields] = await connection.query(`SELECT * FROM users WHERE ID LIKE ?;`,[user_id+'']);
 			connection.release();
 			if(rows.length<1) {
-				res.redirect('/login');
+				res.status(401).json({ message:'no matched user'});
 			}
 			else {
 				const user_password = await myhash.pbkdf2Hasing(unhashed_password,rows[0].salt)
@@ -50,6 +49,7 @@ module.exports = async function(req, res, next) {
 			}
 		}
 		catch(err) {
+			if(connection) connection.release();
 			console.error(`login failed: ${err.message}`);
 			res.status(400).json({ message:'login failed...'});
 		}

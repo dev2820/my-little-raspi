@@ -8,10 +8,20 @@ router.post('/login', usersController.login);
 /* signup request (CREATE) */
 router.post('/signup', usersController.signup);
 
-/* modify request (MODIFY)*/
-router.post('/modify',verifyToken, usersController.modify);
+/* isuniqueid request */
+router.post('/isuniqueid', usersController.isuniqueid);
+
+/* modifyuserinfo request (MODIFY)*/
+router.post('/modifyuserinfo',verifyToken, usersController.modifyuserinfo);
 
 /* delete request (DELETE)*/
 router.post('/signout',verifyToken, usersController.signout);
+
+/* getuserinfo request (READ)*/
+router.get('/getuserinfo',verifyToken, usersController.getuserinfo);
+
+/* modifypassword request (READ)*/
+router.post('/modifypassword',verifyToken, usersController.modifypassword);
+
 
 module.exports = router;

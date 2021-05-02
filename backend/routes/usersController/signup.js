@@ -1,4 +1,3 @@
-const express = require('express');
 const jwt = require('jsonwebtoken');
 const myhash = require('../../my_modules/pbkdf2');
 const mysqlDB = require('../../my_modules/mysql-db');
@@ -33,13 +32,13 @@ module.exports = async (req, res, next) => {
         const user_password = await myhash.pbkdf2Hasing(unhashed_password,user_salt);
         //open mariaDB
         const connection = await mysqlDB.getConnection(async conn => conn);
-        const query = `INSERT INTO users(id,name,email,password,salt) VALUES(?,?,?,?,?)`
+        const query = `INSERT INTO users(id,name,email,password,salt) VALUES(?,?,?,?,?)`;
         const [rows,fields] = await connection.query(query,[user_id+'',user_name+'',user_email+'',user_password+'',user_salt+'']);
         connection.release();//연결 종료
 
         //jwt token 생성
         const token = jwt.sign({
-            userID: rows[0].id,
+            userID: user_id,
             loginTime: new Date()
         }, JWTKEY, {
             expiresIn: '1h'
