@@ -22,8 +22,8 @@ app.set('view engine', 'ejs');
 
 if(process.env.NODE_ENV === 'production') {
   app.use(logger('combined'));
-  app.use(helmet());
-  app.use(hpp());
+  //app.use(helmet());
+  //app.use(hpp());
 }
 else {
   app.use(logger('dev'));
