@@ -2,7 +2,7 @@
     <div>
         <header>
             <h1>Home</h1>
-            <button @click="logout()">logout</button>
+            <button @click="logout()">로그아웃</button>
             <router-link to="/modify">회원정보</router-link>
         </header>
         <main>
