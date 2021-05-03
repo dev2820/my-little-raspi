@@ -9,19 +9,19 @@ router.post('/login', usersController.login);
 router.post('/signup', usersController.signup);
 
 /* isuniqueid request */
-router.get('/is-uniqueid', usersController.isuniqueid);
+router.get('/is-uniqueid', usersController.isUniqueId);
 
 /* modifyuserinfo request (MODIFY)*/
-router.patch('/modify-user-info',verifyToken, usersController.modifyuserinfo);
+router.patch('/modify-user-info',verifyToken, usersController.modifyUserInfo);
 
 /* delete request (DELETE)*/
 router.delete('/signout',verifyToken, usersController.signout);
 
 /* getuserinfo request (READ)*/
-router.get('/get-user-info',verifyToken, usersController.getuserinfo);
+router.get('/get-user-info',verifyToken, usersController.getUserInfo);
 
 /* modifypassword request (READ)*/
-router.patch('/modify-password',verifyToken, usersController.modifypassword);
+router.patch('/modify-password',verifyToken, usersController.modifyPassword);
 
 
 module.exports = router;

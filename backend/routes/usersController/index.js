@@ -1,17 +1,17 @@
 const login = require('./login'); 
 const signup = require('./signup'); 
 const signout = require('./signout'); 
-const modifyuserinfo = require('./modifyuserinfo'); 
-const modifypassword = require('./modifypassword.js'); 
-const isuniqueid = require('./isuniqueid'); 
-const getuserinfo = require('./getuserinfo');
+const modifyUserInfo = require('./modifyUserinfo'); 
+const modifyPassword = require('./modifyPassword.js'); 
+const isUniqueId = require('./isUniqueId'); 
+const getUserInfo = require('./getUserInfo');
 
 module.exports = {
     login,
     signup,
     signout,
-    modifyuserinfo,
-    modifypassword,
-    isuniqueid,
-    getuserinfo,
+    modifyUserInfo,
+    modifyPassword,
+    isUniqueId,
+    getUserInfo,
 }
