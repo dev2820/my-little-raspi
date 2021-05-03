@@ -17,13 +17,13 @@ module.exports = async (req, res, next) => {
     const user_email = req.body.email || null;
     const user_plainPassword = req.body.password || null;
     
-	if(!user_id == null) {
+	if(!user_id) {
         res.json({ status:'FAILED',message:'need id'});
     }
-    else if(!user_name == null) {
+    else if(!user_name) {
         res.json({ status:'FAILED',message:'need name'});
     }
-    else if(user_plainPassword == null) {
+    else if(!user_plainPassword) {
         res.json({ status:'FAILED',message:'need password'});
     }
     try {

@@ -3,7 +3,7 @@ const mysqlDB = require('../../my_modules/mysql-db');
 module.exports = async function(req, res, next) {
 	const user_id = res.locals.userID || null;
 	try {
-		if(user_id) {
+		if(!user_id) {
 			throw new Error('아이디를 입력해 주십시오.');
 		}
 		//open mariaDB

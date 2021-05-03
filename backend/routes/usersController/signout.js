@@ -7,9 +7,12 @@ const mysqlDB = require('../../my_modules/mysql-db');
 */
 module.exports = async function(req, res, next) {
 	const user_id = res.locals.userID;
-    const user_plainPassword = req.body.password;
+    const user_plainPassword = req.body.password || null;
 	//open mariaDB
     try {
+        if(!user_plainPassword) {
+            throw new Error('비밀번호를 입력해 주십시오.');
+        }
         const connection = await mysqlDB.getConnection(async conn => conn);
         const [rows,fields] = await connection.query(`SELECT password,salt FROM users WHERE id=?;`,[user_id+'']);
         if(await myhash.compare(user_plainPassword,rows[0].password,rows[0].salt)) {

@@ -7,10 +7,10 @@ module.exports = async function(req, res, next) {
     const user_old_password = req.body.oldPassword || null;
     const user_new_password = req.body.newPassword || null;
 	try {
-        if(user_old_password) {
+        if(!user_old_password) {
             throw new Error('이전 비밀번호를 입력해 주십시오.');
         }
-        else if(user_new_password) {
+        else if(!user_new_password) {
             throw new Error('새로 바꿀 비밀번호를 입력해 주십시오.');
         }
         //open mariaDB

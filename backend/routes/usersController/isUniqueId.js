@@ -7,7 +7,7 @@ module.exports = async function(req, res, next) {
 	else {
 		const user_id = req.body.id || null;
 		try {
-			if(user_id) {
+			if(!user_id) {
 				throw new Error('아이디를 입력해 주십시오.');
 			}
 			//open mariaDB
