@@ -20,9 +20,9 @@
 <script>
 
 import Cookie from '../../my_modules/myCookie'
-import ModifyUserInfo from '../modules/ModifyUserInfo'
-import ModifyPassword from '../modules/ModifyPassword'
-import Signout from '../modules/Signout'
+import ModifyUserInfo from '../modify/ModifyUserInfo'
+import ModifyPassword from '../modify/ModifyPassword'
+import Signout from '../modify/Signout'
 export default {
     name:"Modify",
     data() {
@@ -43,14 +43,6 @@ export default {
                 console.error('logout failed:',error);
             }
         },
-        passwordEqualCheck(password,passwordAgain) {
-            if(!password) { 
-                throw new Error("비밀번호를 입력해 주십시오.");
-            }
-            else if(password !== passwordAgain) { 
-                throw new Error("비밀번호가 일치하지 않습니다.");
-            }
-        }
     }
 }
 </script>

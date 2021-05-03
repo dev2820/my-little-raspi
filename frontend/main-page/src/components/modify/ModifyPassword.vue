@@ -45,6 +45,14 @@ export default {
             confirm(message);
             this.requestStatus = "failed";
         },
+        passwordEqualCheck(password,passwordAgain) {
+            if(!password) { 
+                throw new Error("비밀번호를 입력해 주십시오.");
+            }
+            else if(password !== passwordAgain) { 
+                throw new Error("비밀번호가 일치하지 않습니다.");
+            }
+        }
     }
 }
 </script>
