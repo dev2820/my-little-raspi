@@ -9,7 +9,7 @@ router.post('/login', usersController.login);
 router.post('/signup', usersController.signup);
 
 /* isuniqueid request */
-router.get('/is-uniqueid', usersController.isUniqueId);
+router.post('/is-uniqueid', usersController.isUniqueId);
 
 /* modifyuserinfo request (MODIFY)*/
 router.patch('/modify-user-info',verifyToken, usersController.modifyUserInfo);
