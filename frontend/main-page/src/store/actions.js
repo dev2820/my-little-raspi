@@ -25,29 +25,29 @@ export default {
         const data = {
             id:payload
         }
-        return await axios.post('/users/isuniqueid', data);
+        return await axios.get('/users/is-uniqueid', data);
     },
     async requestUserInfo({state}) {
-        return await axios.get('/users/getuserinfo');
+        return await axios.get('/users/get-user-info');
     },
     async requestModifyUserInfo({state},payload) {
         const data = {
             name:payload.name,
             email:payload.email
         }
-        return await axios.post('/users/modifyuserinfo',data);
+        return await axios.patch('/users/modify-user-info',data);
     },
     async requestModifyPassword({state},payload) {
         const data = {
             oldPassword: payload.oldPassword,
             newPassword: payload.newPassword,
         }
-        return await axios.post('/users/modifypassword',data);
+        return await axios.patch('/users/modify-password',data);
     },
     async requestSignout({state},payload) {
         const data = {
             password: payload.password,
         }
-        return await axios.post('/users/signout',data);
+        return await axios.delete('/users/signout',{ data });
     }
 }
