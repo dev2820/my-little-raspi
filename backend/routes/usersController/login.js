@@ -33,6 +33,7 @@ module.exports = async function(req, res, next) {
 			const connection = await mysqlDB.getConnection(async conn => conn);
 			const [rows,fields] = await connection.query(`SELECT * FROM users WHERE ID LIKE ?;`,[user_id+'']);
 			connection.release();
+
 			if(rows.length<1) {
 				res.status(401).json({ message:'no matched user'});
 			}
