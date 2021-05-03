@@ -1,4 +1,3 @@
-const express = require('express');
 const mysqlDB = require('../../my_modules/mysql-db');
 
 module.exports = async function(req, res, next) {

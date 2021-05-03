@@ -25,7 +25,7 @@ module.exports = async function(req, res, next) {
 		try {
 			//open mariaDB
 			const connection = await mysqlDB.getConnection(async conn => conn);
-			const [rows,fields] = await connection.query(`SELECT password,salt FROM users WHERE ID LIKE ?;`,[user_id+'']);
+			const [rows,fields] = await connection.query(`SELECT * FROM users WHERE ID LIKE ?;`,[user_id+'']);
 			connection.release();
 			if(rows.length<1) {
 				res.status(401).json({ message:'no matched user'});

@@ -5,7 +5,7 @@ const verifyToken = (req, res, next) => {
     try {
         const clientToken = req.cookies.user;
         const decoded = jwt.verify(clientToken, JWTKEY);
-
+        
         if(decoded) {
             res.locals.userID = decoded.userID;
             next();
