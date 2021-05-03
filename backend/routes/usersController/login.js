@@ -20,19 +20,18 @@ module.exports = async function(req, res, next) {
 	}
 	else {
 		const user_id = req.body.id || null;
-		const plainPassword = req.body.password || null;
+		const user_plainPassword = req.body.password || null;
 		const JWTKEY = process.env.JWTSECRET
 		try {
 			//open mariaDB
 			const connection = await mysqlDB.getConnection(async conn => conn);
-			const [rows,fields] = await connection.query(`SELECT * FROM users WHERE ID LIKE ?;`,[user_id+'']);
+			const [rows,fields] = await connection.query(`SELECT password,salt FROM users WHERE ID LIKE ?;`,[user_id+'']);
 			connection.release();
 			if(rows.length<1) {
 				res.status(401).json({ message:'no matched user'});
 			}
 			else {
-				const hashedPassword = await myhash.pbkdf2Hasing(plainPassword,rows[0].salt)
-				if(hashedPassword === rows[0].password) {
+				if(await myhash.compare(user_plainPassword,rows[0].password,rows[0].salt)) {
 					//jwt token 생성
 					const token = jwt.sign({
 						userID: rows[0].id,

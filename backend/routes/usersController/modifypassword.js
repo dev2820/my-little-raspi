@@ -11,10 +11,8 @@ module.exports = async function(req, res, next) {
         const connection = await mysqlDB.getConnection(async conn => conn);
         const [rows,fields] = await connection.query(`SELECT password,salt FROM users WHERE ID LIKE ?;`,[user_id+'']);
 		if(rows.length === 1) {
-            const user_salt = rows[0].salt;
-            const hashedPassword = await myhash.pbkdf2Hasing(user_old_password,user_salt);
-            if(hashedPassword === rows[0].password) {
-                const hashedNewPassword = await myhash.pbkdf2Hasing(user_new_password,user_salt);
+            if(await myhash.compare(user_old_password,rows[0].password,rows[0].salt)) {
+                const hashedNewPassword = await myhash.pbkdf2Hasing(user_new_password,rows[0].salt);
                 const datas = [hashedNewPassword+'',user_id+''];
                 await connection.query(`UPDATE users SET password=? WHERE id=?`,datas);
                 res.status(201).json({ message:'password modify sucess'});

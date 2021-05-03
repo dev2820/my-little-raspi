@@ -27,7 +27,7 @@ module.exports = async (req, res, next) => {
         res.json({ status:'FAILED',message:'need password'});
     }
     try {
-        const user_salt = await myhash.makeSalt();
+        const user_salt = await myhash.genSalt();
         const hashedPassword = await myhash.pbkdf2Hasing(plainPassword,user_salt);
         //open mariaDB
         const connection = await mysqlDB.getConnection(async conn => conn);
