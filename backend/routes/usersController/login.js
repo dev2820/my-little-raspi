@@ -20,7 +20,7 @@ module.exports = async function(req, res, next) {
 	}
 	else {
 		const user_id = req.body.id || null;
-		const unhashed_password = req.body.password || null;
+		const plainPassword = req.body.password || null;
 		const JWTKEY = process.env.JWTSECRET
 		try {
 			//open mariaDB
@@ -31,8 +31,8 @@ module.exports = async function(req, res, next) {
 				res.status(401).json({ message:'no matched user'});
 			}
 			else {
-				const user_password = await myhash.pbkdf2Hasing(unhashed_password,rows[0].salt)
-				if(user_password === rows[0].password) {
+				const hashedPassword = await myhash.pbkdf2Hasing(plainPassword,rows[0].salt)
+				if(hashedPassword === rows[0].password) {
 					//jwt token 생성
 					const token = jwt.sign({
 						userID: rows[0].id,
