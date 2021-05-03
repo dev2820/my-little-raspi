@@ -37,6 +37,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser(process.env.COOKIE_SECRET));
+/*
 const sessionOption = {
   resave: false, // 세션에 수정사항이 생기지 않더라도 세션을 다시 저장하지 않음
   saveUninitialized: false, // 세션에 저장할 내역이 없다면 세션을 저장하지 않음
@@ -50,7 +51,7 @@ if(process.env.NODE_ENV === 'production') {
   sessionOption.proxy = true;
 }
 app.use(session(sessionOption));
-
+*/
 app.use('/', indexRouter);//메인 페이지 요청
 app.use('/users', usersRouter);//회원 정보 관리 요청은 users router로 뺌
 app.use('/systemInfo',verifyToken, systemInfoRouter);
