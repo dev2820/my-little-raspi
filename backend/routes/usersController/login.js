@@ -55,7 +55,7 @@ module.exports = async function(req, res, next) {
 		}
 		catch(err) {
 			console.error(`login failed: ${err.message}`);
-			res.status(400).json({ message:'login failed...'});
+			res.status(400).json({ message:`login failed: ${err.message}`});
 		}
 	}
 }

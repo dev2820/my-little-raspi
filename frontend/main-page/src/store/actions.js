@@ -25,7 +25,7 @@ export default {
         const data = {
             id:payload
         }
-        return await axios.get('/users/is-uniqueid', data);
+        return await axios.post('/users/is-uniqueid', data);
     },
     async requestUserInfo({state}) {
         return await axios.get('/users/get-user-info');
