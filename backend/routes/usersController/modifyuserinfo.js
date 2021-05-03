@@ -6,6 +6,12 @@ module.exports = async function(req, res, next) {
     const user_name = req.body.name;
 	const user_email = req.body.email;
 	try {
+        if(user_old_password) {
+            throw new Error('이전 비밀번호를 입력해 주십시오.');
+        }
+        else if(user_new_password) {
+            throw new Error('새로 바꿀 비밀번호를 입력해 주십시오.');
+        }
         //open mariaDB
         const connection = await mysqlDB.getConnection(async conn => conn);
         //password change?

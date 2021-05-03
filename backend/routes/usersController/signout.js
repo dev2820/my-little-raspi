@@ -7,18 +7,17 @@ const mysqlDB = require('../../my_modules/mysql-db');
 */
 module.exports = async function(req, res, next) {
 	const user_id = res.locals.userID;
-    const unhashed_password = req.body.password;
+    const user_plainPassword = req.body.password;
 	//open mariaDB
     try {
         const connection = await mysqlDB.getConnection(async conn => conn);
         const [rows,fields] = await connection.query(`SELECT password,salt FROM users WHERE id=?;`,[user_id+'']);
-        const hashedPassword = await myhash.pbkdf2Hasing(unhashed_password,rows[0].salt)
-        if(hashedPassword !== rows[0].password) {
-            throw new Error('password wrong');
-        }
-        else {
+        if(await myhash.compare(user_plainPassword,rows[0].password,rows[0].salt)) {
             await connection.query(`DELETE FROM users WHERE id = ?`,[user_id+'']);
             res.status(201).json({ message:'signout success'});
+        }
+        else {
+            throw new Error('password wrong');
         }
         connection.release();
     }  

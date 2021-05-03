@@ -3,6 +3,9 @@ const mysqlDB = require('../../my_modules/mysql-db');
 module.exports = async function(req, res, next) {
 	const user_id = res.locals.userID || null;
 	try {
+		if(user_id) {
+			throw new Error('아이디를 입력해 주십시오.');
+		}
 		//open mariaDB
 		const connection = await mysqlDB.getConnection(async conn => conn);
 		const [rows,fields] = await connection.query(`SELECT * FROM users WHERE ID LIKE ?;`,[user_id+'']);

@@ -4,9 +4,15 @@ const mysqlDB = require('../../my_modules/mysql-db');
 /*  POST users info modify */
 module.exports = async function(req, res, next) {
 	const user_id = res.locals.userID;
-    const user_old_password = req.body.oldPassword;
-    const user_new_password = req.body.newPassword;
+    const user_old_password = req.body.oldPassword || null;
+    const user_new_password = req.body.newPassword || null;
 	try {
+        if(user_old_password) {
+            throw new Error('이전 비밀번호를 입력해 주십시오.');
+        }
+        else if(user_new_password) {
+            throw new Error('새로 바꿀 비밀번호를 입력해 주십시오.');
+        }
         //open mariaDB
         const connection = await mysqlDB.getConnection(async conn => conn);
         const [rows,fields] = await connection.query(`SELECT password,salt FROM users WHERE ID LIKE ?;`,[user_id+'']);

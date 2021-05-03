@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
     const user_id = req.body.id || null;
     const user_name = req.body.name || null;
     const user_email = req.body.email || null;
-    const plainPassword = req.body.password || null;
+    const user_plainPassword = req.body.password || null;
     
 	if(!user_id == null) {
         res.json({ status:'FAILED',message:'need id'});
@@ -23,12 +23,12 @@ module.exports = async (req, res, next) => {
     else if(!user_name == null) {
         res.json({ status:'FAILED',message:'need name'});
     }
-    else if(plainPassword == null) {
+    else if(user_plainPassword == null) {
         res.json({ status:'FAILED',message:'need password'});
     }
     try {
         const user_salt = await myhash.genSalt();
-        const hashedPassword = await myhash.pbkdf2Hasing(plainPassword,user_salt);
+        const hashedPassword = await myhash.pbkdf2Hasing(user_plainPassword,user_salt);
         //open mariaDB
         const connection = await mysqlDB.getConnection(async conn => conn);
         const query = `INSERT INTO users(id,name,email,password,salt) VALUES(?,?,?,?,?)`;
