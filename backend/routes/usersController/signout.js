@@ -18,7 +18,6 @@ module.exports = async function(req, res, next) {
         }
         else {
             await connection.query(`DELETE FROM users WHERE id = ?`,[user_id+'']);
-            req.session.destroy();
             res.status(201).json({ message:'signout success'});
         }
         connection.release();
