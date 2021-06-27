@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd ./frontend/main-page
+npm run build
+rm -rf ../../backend/public/*
+mv -f ./dist/* ../../backend/public
+git add .
+git commit -m "build"
+
