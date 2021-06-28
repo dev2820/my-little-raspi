@@ -1,7 +1,7 @@
 <template>
-    <div class="toggle-widget">
+    <div class="common-toggle-widget">
         <label class="switch">
-            <input type="checkbox" @change="handler($event)"/>
+            <input type="checkbox" @change="handler($event)" :checked="checked"/>
             <span class="slider round"></span>
         </label>
     </div>
@@ -10,6 +10,12 @@
 <script>
 export default {
     name: 'CommonToggle',
+    props:{
+        'checked':{
+            type: Boolean,
+            default: false
+        }
+    },
     methods: {
         handler(event){
             const isToggleOn = event.target.checked;
