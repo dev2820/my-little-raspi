@@ -35,7 +35,7 @@ app.use(cors({
 app.set('jwt-secret',process.env.JWTSECRET);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.resolve(__dirname, 'public')));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 /*
 const sessionOption = {
@@ -52,9 +52,9 @@ if(process.env.NODE_ENV === 'production') {
 }
 app.use(session(sessionOption));
 */
-app.use('/', indexRouter);//메인 페이지 요청
 app.use('/users', usersRouter);//회원 정보 관리 요청은 users router로 뺌
 app.use('/systemInfo',verifyToken, systemInfoRouter);
+app.use('*', indexRouter);//메인 페이지 요청
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
