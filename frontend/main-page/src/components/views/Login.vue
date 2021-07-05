@@ -1,20 +1,13 @@
 <template>
     <div class="card">
-        <header>
-            <h1>login</h1>
-            <router-link to="/signup">signup</router-link>
-            {{loginStatus}}
-        </header>
-        <main>
-            <div class="form">
-                <input id="id" v-model="id">
-                <input id="pw" type="password" v-model="password">
-                <button @click="requestLogin({id,password},success,failed)">submit</button>
-            </div>
-        </main>
-        <footer>
-
-        </footer>
+        <h1>login</h1>
+        <router-link to="/signup">signup</router-link>
+        {{loginStatus}}
+        <div class="form">
+            <input id="id" v-model="id">
+            <input id="pw" type="password" v-model="password">
+            <button @click="requestLogin({id,password},success,failed)">submit</button>
+        </div>
     </div>
 </template>
 
