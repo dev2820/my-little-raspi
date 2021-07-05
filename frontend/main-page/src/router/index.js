@@ -3,6 +3,7 @@ import Home from "@/components/views/Home.vue";
 import Login from "@/components/views/Login.vue";
 import Signup from "@/components/views/Signup.vue";
 import Modify from "@/components/views/Modify.vue";
+import Monitor from "@/components/views/Monitor.vue";
 import Cookie from '../my_modules/myCookie';
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/modify",
     name: "Modify",
     component: Modify,
+  },  
+  {
+    path: "/monitor",
+    name: "Monitor",
+    component: Monitor,
   },
 ];
 
@@ -52,4 +58,5 @@ router.beforeEach((to, from, next)=> {
         }
     }
 })
+
 export default router;

@@ -1,3 +1,5 @@
 export default {
-    name:"Test"
+    name:"Test",
+
+    routeList: ["/monitor","/"]
 } 
