@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>Monitor</h1>
         <Clock :time="nowTime"/>
     </div>
 </template>

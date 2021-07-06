@@ -1,7 +1,9 @@
 <template>
     <div class="home-page">
         <AppLinkBox class="link-box">
-            <AppLink class="link" href="/modify" :src="icon" title="go to modify">modify</AppLink>
+            <AppLink class="link" href="/monitor" :src="monitoringIcon" title="go to monitor">monitor</AppLink>
+            <AppLink class="link" href="/shell" :src="bashIcon" title="go to shell">SSH</AppLink>
+            <AppLink class="link" href="/modify" :src="configIcon" title="go to modify">modify</AppLink>
         </AppLinkBox>
         <Clock class="clock" :time="nowTime"/>
     </div>
@@ -18,7 +20,9 @@ export default {
             id:"",
             password:"",
             nowTime: new Date(),
-            icon: require('@/assets/images/config-icon.png')
+            configIcon: require('@/assets/images/config-icon.png'),
+            bashIcon: require('@/assets/images/bash-icon.png'),
+            monitoringIcon: require('@/assets/images/monitoring-icon.png')
         }
     },
     components:{

@@ -5,7 +5,7 @@
         <router-link to="/modify">회원정보</router-link>
     </header>
     <main>
-      <aside id="left-aside">
+      <aside v-if="$route.path !== '/login'" id="left-aside">
         <RouteLeftButton @click="gotoLeftRoute"></RouteLeftButton>
       </aside>
       <router-view id="view" v-slot="{ Component }">
@@ -13,7 +13,7 @@
           <component :is="Component"/>
         </transition>
       </router-view>
-      <aside id="right-aside">
+      <aside v-if="$route.path !== '/login'" id="right-aside">
         <RouteRightButton @click="gotoRightRoute"></RouteRightButton>
       </aside>
     </main>

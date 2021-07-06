@@ -1,6 +1,5 @@
 <template>
     <div class="card">
-        <h1>login</h1>
         <router-link to="/signup">signup</router-link>
         {{loginStatus}}
         <div class="form">
