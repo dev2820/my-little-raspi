@@ -4,6 +4,7 @@ import Login from "@/components/views/Login.vue";
 import Signup from "@/components/views/Signup.vue";
 import Modify from "@/components/views/Modify.vue";
 import Monitor from "@/components/views/Monitor.vue";
+import Shell from "@/components/views/Shell.vue";
 import Cookie from '../my_modules/myCookie';
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/monitor",
     name: "Monitor",
     component: Monitor,
+  },
+  {
+    path: "/shell",
+    name: "Shell",
+    component: Shell,
   },
 ];
 
