@@ -1,6 +1,8 @@
 <template>
     <header id="header">
-      
+        <h1 class="title">{{$route.name}}</h1>
+        <button @click="logout()">로그아웃</button>
+        <router-link to="/modify">회원정보</router-link>
     </header>
     <main>
       <aside id="left-aside">
@@ -16,11 +18,12 @@
       </aside>
     </main>
     <footer>
-      <RouteDot :routes="routeList"></RouteDot>
+      <RouteDot v-if="$route.path !== '/login'" :routes="routeList"></RouteDot>
     </footer>
 </template>
 
 <script>
+import Cookie from './my_modules/myCookie'
 import RouteLeftButton from './components/widget/RouteLeftButton.vue'
 import RouteRightButton from './components/widget/RouteRightButton.vue'
 import RouteDot from './components/widget/RouteDot.vue'
@@ -57,7 +60,16 @@ export default {
       }
       const nextPath = this.routeList[nextIndex];
       this.$router.push({ path: `${nextPath}`});
-    }
+    },
+    logout() {
+      try {
+          Cookie.deleteCookie('user');
+          this.$router.push('/login');
+      }
+      catch(error) {
+          console.error('logout failed:',error);
+      }
+    },
   },
   data() {
     return {
@@ -84,6 +96,19 @@ html,body {
 header {
   height:60px;
   background-color:#FF6976;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-end;
+}
+header .title {
+  position:absolute;
+  width:100px;
+  height:40px;
+  left:50%;
+  margin-left:-50px;
+  margin-top:10px;
+  margin-bottom:10px;
+
 }
 main {
   position:relative;
@@ -96,6 +121,7 @@ aside {
   position:absolute;
   width:100px;
   height:100%;
+  z-index:100;
 }
 aside#right-aside {
   right:0;

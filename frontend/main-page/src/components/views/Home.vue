@@ -1,16 +1,15 @@
 <template>
-    <div>
-        <h1>Home</h1>
-        <button @click="logout()">로그아웃</button>
-        <router-link to="/modify">회원정보</router-link>
-        <app-link href="/modify" :src="icon" title="go to modify">modify</app-link>
+    <div class="home-page">
+        <AppLinkBox class="link-box">
+            <AppLink class="link" href="/modify" :src="icon" title="go to modify">modify</AppLink>
+        </AppLinkBox>
         <Clock class="clock" :time="nowTime"/>
     </div>
 </template>
 
 <script>
-import Cookie from '../../my_modules/myCookie'
 import AppLink from '../widget/CommonAppLink.vue'
+import AppLinkBox from '../widget/CommonAppLinkBox.vue'
 import Clock from '../widget/CommonClock.vue'
 export default {
     name:"Home",
@@ -23,26 +22,29 @@ export default {
         }
     },
     components:{
+        AppLinkBox,
         AppLink,
         Clock
     },
     methods: {
-        logout() {
-            try {
-                Cookie.deleteCookie('user');
-                this.$router.push('/login');
-            }
-            catch(error) {
-                console.error('logout failed:',error);
-            }
-        },
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.home-page {
+    position:absolute;
+    display:flex;
+    flex-direction:column;
+    justify-content: flex-start;
+}
 .clock {
-    left:300px;
+    left:50%;
+    margin-left: -100px;
     top:100px;
+}
+.link-box {
+    position:relative;
+    box-sizing:border-box;
 }
 </style>
