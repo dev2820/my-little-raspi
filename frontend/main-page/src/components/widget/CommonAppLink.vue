@@ -1,9 +1,9 @@
 <template>
     <div class="common-app-link">
-        <a :href="href" :title="title">
-            <img :src="src"/>
+        <router-link class="link" :to="href" :title="title">
+            <img class="card" :src="src"/>
             <slot></slot>
-        </a>
+        </router-link>
     </div>
 </template>
 
@@ -28,25 +28,28 @@ export default {
 </script>
 
 <style scoped>
-a {
+.link {
     display:inline-flex;
     flex-direction:column;
     box-sizing:border-box;
     text-decoration:none;
+    margin:0px 5px;
 }
-a > img {
+.link > img {
     width:auto;
     height:100%;
     background:transparent;
     width:64px;
     height:64px;
-    border-radius:30%;
+    border-radius:24px;
     padding:10px;
     margin-bottom:10px;
+}
+.card {
     box-shadow: 0px 4px 4px 1px rgba(0,0,0,0.35);
     transition:0.2s;
 }
-a > img:hover {
+.card:hover {
     transform:translateY(-4px);
     box-shadow: 0px 4px 4px 1px rgba(0,0,0,0.35);
     transition:0.2s;

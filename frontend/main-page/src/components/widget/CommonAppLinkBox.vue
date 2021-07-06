@@ -8,8 +8,6 @@
 export default {
     name: 'CommonAppLinkBox',
     props: {
-
-
     },
 }
 </script>
