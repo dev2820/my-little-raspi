@@ -1,10 +1,11 @@
 <template>
     <div>
-        {{'shell will be here'}}
+        <ShellClient/>
     </div>
 </template>
 
 <script>
+import ShellClient from '@/components/container/SSHclient.vue'
 export default {
     name:"Shell",
     data() {
@@ -13,7 +14,7 @@ export default {
         }
     },
     components:{
-        
+        ShellClient
     },
     methods: {
     }

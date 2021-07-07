@@ -8,7 +8,7 @@ router.post('/command',async (req,res)=>{
         const ssh = await nodeSSH.connection();
         const result = await ssh.execCommand(command);
         res.status(200).json({
-            data: result.stdout
+            result:result.stdout
         })
     }
     catch(err) {

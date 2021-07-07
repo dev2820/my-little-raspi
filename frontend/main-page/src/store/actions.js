@@ -2,9 +2,6 @@ import axios from 'axios'
 import myCookie from '@/my_modules/myCookie'
 
 export default {
-    actionTest(state) {
-        console.log('action Test function');
-    },
     async requestLogin({state,commit}, payload) {
         const data = {
             id:payload.id,
@@ -49,5 +46,12 @@ export default {
             password: payload.password,
         }
         return await axios.delete('/users/signout',{ data });
+    },
+    /*ssh 통신용 actions */
+    async requestExecCommand({state},payload) {
+        const data = {
+            command: payload.command,
+        }
+        return await axios.post('/shell/command',data);
     }
 }
