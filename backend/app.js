@@ -11,6 +11,7 @@ require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const shellRouter = require('./routes/shell');
 const systemInfoRouter = require('./routes/systemInfo');
 
 const { verifyToken } = require('./my_middleware/authorization')
@@ -53,7 +54,8 @@ if(process.env.NODE_ENV === 'production') {
 app.use(session(sessionOption));
 */
 app.use('/users', usersRouter);//회원 정보 관리 요청은 users router로 뺌
-app.use('/systemInfo',verifyToken, systemInfoRouter);
+app.use('/shell',shellRouter);//verifyToken 추후에 추가
+app.use('/systemInfo',verifyToken, systemInfoRouter); // monitoring용 라우터
 app.use('*', indexRouter);//메인 페이지 요청
 
 // catch 404 and forward to error handler
