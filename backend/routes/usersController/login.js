@@ -35,22 +35,33 @@ module.exports = async function(req, res, next) {
 			connection.release();
 
 			if(rows.length<1) {
-				res.status(401).json({ message:'no matched user'});
+				res.status(400).json({ message:'no matched user'});
 			}
 			else {
 				if(await myhash.compare(user_plainPassword,rows[0].password,rows[0].salt)) {
 					//jwt token 생성
-					const token = jwt.sign({
+					const refreshToken = jwt.sign({
+						userID: rows[0].id,
+						loginTime: new Date()
+					}, JWTKEY, {
+						expiresIn: '24h'
+					});
+					//todo: db에 refreshToken 저장하는 로직 추가하세요
+					res.cookie('refreshToken',refreshToken, {
+						maxAge: 60*60*24,
+						httpOnly: true
+						//secure: true
+					});
+					const accessToken = jwt.sign({
 						userID: rows[0].id,
 						loginTime: new Date()
 					}, JWTKEY, {
 						expiresIn: '1h'
 					});
-					res.cookie('user',token);
-					res.status(201).json({ token, message:'login success'});
+					res.status(201).json({ accessToken, expire: 60*60, message:'login success'});
 				}
 				else {
-					res.status(401).json({ message:'password incorrect'});
+					res.status(400).json({ message:'password incorrect'});
 				}
 			}
 		}

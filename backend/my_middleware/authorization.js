@@ -1,22 +1,32 @@
 const jwt = require('jsonwebtoken');
 const JWTKEY = process.env.JWTSECRET;
+const accessTokenExpiresIn = "1h"
 
 const verifyToken = (req, res, next) => {
     try {
-        const clientToken = req.cookies.user;
-        const decoded = jwt.verify(clientToken, JWTKEY);
+        const decodedAccessToken = req.headers.authorization && jwt.verify(req.headers.authorization.split('Bearer ')[1],JWTKEY, { expiresIn: accessTokenExpiresIn});
+        console.log(decodedAccessToken)
+        const decodedRefreshToken = req.cookies['refreshToken'] && jwt.verify(req.cookies['refreshToken'],JWTKEY);
         
-        if(decoded) {
-            res.locals.userID = decoded.userID;
-            next();
+        if(!!decodedRefreshToken) { // refreshToken이 존재하는 경우
+            if(!!decodedAccessToken) { // accessToken이 존재하는 경우
+                res.locals.userID = decodedAccessToken.userID;
+                next();
+            }
+            else { // accessToken이 만료된  경우 -> 재발급요청
+                res.status(401).json({message: 'accessToken is expired'})
+            }
         }
         else {
-            res.status(401).json({ message: 'unauthorized'});
+            throw err;
         }
     }
-    catch (error) {
-        res.status(419).json({ message: 'token expired'});
+    catch (err) {
+        if(req.cookies['refreshToken']) res.clearCookie('refreshToken');
+        res.status(401).json({ message: 'unauthorized'});
     }
 }
 
-exports.verifyToken = verifyToken;
+module.exports = {
+    verifyToken
+}
