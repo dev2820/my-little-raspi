@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <router-link to="/signup">signup</router-link>
-        {{loginStatus}}
+        <router-link to="/findpass">findpass</router-link>
         <div class="form">
             <input id="id" v-model="id">
             <input id="pw" type="password" v-model="password">
@@ -36,12 +36,12 @@ export default {
             try {
                 const response = await this.$store.dispatch('requestLogin',info);
                 if(response.status === 201) {
-                    success();
+                    this.success();
                 }
             }
             catch (error) {
-                if(error.response) failed(error.response.data.message);
-                else failed(error.message);
+                if(error.response) this.failed(error.response.data.message);
+                else this.failed(error.message);
                 console.error('login failed:',error);
             }
         }
