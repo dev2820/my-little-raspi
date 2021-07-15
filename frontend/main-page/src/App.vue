@@ -1,21 +1,23 @@
 <template>
     <header id="header">
-        <h1 class="title">{{$route.name}}</h1>
-        <button @click="logout()">로그아웃</button>
+        <h1 class="title">
+          {{$route.name}}
+        </h1>
+        <button @click="logout">로그아웃</button>
         <router-link to="/modify">회원정보</router-link>
     </header>
     <main>
-      <aside v-if="$route.path !== '/login'" id="left-aside">
+      <!-- <aside v-if="$route.path !== '/login'" id="left-aside">
         <RouteLeftButton @click="gotoLeftRoute"></RouteLeftButton>
-      </aside>
+      </aside> -->
       <router-view id="view" v-slot="{ Component }">
         <transition name="slide">
           <component :is="Component"/>
         </transition>
       </router-view>
-      <aside v-if="$route.path !== '/login'" id="right-aside">
+      <!-- <aside v-if="$route.path !== '/login'" id="right-aside">
         <RouteRightButton @click="gotoRightRoute"></RouteRightButton>
-      </aside>
+      </aside> -->
     </main>
     <footer>
       <RouteDot v-if="$route.path !== '/login'" :routes="routeList"></RouteDot>
@@ -24,16 +26,12 @@
 
 <script>
 import Cookie from './my_modules/myCookie'
-import RouteLeftButton from './components/widget/RouteLeftButton.vue'
-import RouteRightButton from './components/widget/RouteRightButton.vue'
 import RouteDot from './components/widget/RouteDot.vue'
-import { mapState } from 'vuex'
+import { mapState,mapActions } from 'vuex'
 export default {
   name: 'App',
   components: {
-    RouteLeftButton,
-    RouteRightButton,
-    RouteDot
+    RouteDot,
   },
   computed: {
     ...mapState([
@@ -41,6 +39,7 @@ export default {
     ])
   },
   methods: {
+    ...mapActions(['requestLogout']),
     gotoLeftRoute() {
       const lastIndex = this.routeList.length-1;
       const currentIndex = this.routeList.indexOf(this.$route.path);
@@ -61,10 +60,12 @@ export default {
       const nextPath = this.routeList[nextIndex];
       this.$router.push({ path: `${nextPath}`});
     },
-    logout() {
+    async logout() {
       try {
-          Cookie.deleteCookie('user');
-          this.$router.push('/login');
+          const response = await this.requestLogout();
+          if(response.status === 200) {
+            this.$router.push('/login');
+          }
       }
       catch(error) {
           console.error('logout failed:',error);
@@ -102,19 +103,22 @@ header {
 }
 header .title {
   position:absolute;
-  width:100px;
+  width:200px;
   height:40px;
   left:50%;
-  margin-left:-50px;
+  margin-left:-100px;
   margin-top:10px;
   margin-bottom:10px;
-
 }
 main {
   position:relative;
   display:flex;
   flex-direction:row;
-  height:700px;
+  justify-content: center;
+  height:800px;
+  width:800px;
+  left:50%;
+  margin-left:-400px;
   overflow:hidden;
 }
 aside {
@@ -122,6 +126,10 @@ aside {
   width:100px;
   height:100%;
   z-index:100;
+  
+}
+aside#left-aside {
+  left:0;
 }
 aside#right-aside {
   right:0;
@@ -132,10 +140,11 @@ footer {
   justify-content: center;
 }
 #view {
+  position:absolute;
   box-sizing:border-box;
   height:100%;
-  width:100%;
-  padding:20px 100px;
+  width:800px;
+  padding:20px;
 }
 .card {
   border-radius:4px;
@@ -153,10 +162,10 @@ footer {
   position: absolute;
 }
 .slide-enter-to {
-  right:0;
+  left:0;
 }
 .slide-enter-from {
-  right:-100%;
+  left:100%;
 }
 .slide-leave-to {
   left: -100%;
