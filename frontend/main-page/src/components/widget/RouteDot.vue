@@ -24,7 +24,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 #route-dot {
-    width:50px;
     display:flex;
     flex-direction:row;
     justify-content: space-around;
@@ -33,6 +32,7 @@ export default {
     font-size:1.1rem;
     text-decoration: none;
     color:#cccccc;
+    margin:0 3px;
 }
 #route-dot a:visited {
     color:#cccccc;
