@@ -5,7 +5,6 @@ const accessTokenExpiresIn = "1h"
 const verifyToken = (req, res, next) => {
     try {
         const decodedAccessToken = req.headers.authorization && jwt.verify(req.headers.authorization.split('Bearer ')[1],JWTKEY, { expiresIn: accessTokenExpiresIn});
-        console.log(decodedAccessToken)
         const decodedRefreshToken = req.cookies['refreshToken'] && jwt.verify(req.cookies['refreshToken'],JWTKEY);
         
         if(!!decodedRefreshToken) { // refreshToken이 존재하는 경우
