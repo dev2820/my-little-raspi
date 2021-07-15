@@ -98,7 +98,7 @@ async function requestSignout({state},payload) {
     }
     return await axios.delete('/users/signout',{ data });
 }
-/*ssh 통신용 actions */
+/*명령어 통신용 actions */
 async function requestExecCommand({state},payload) {
     const data = {
         command: payload.command,

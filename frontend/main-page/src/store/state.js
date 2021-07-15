@@ -3,7 +3,7 @@ export default {
 
     routeList: ["/monitor","/","/shell","/modify"],
 
-    SSHlogs: [],
+    ShellLogs: [],
     commandCache: [],
     accessToken: ""
 } 

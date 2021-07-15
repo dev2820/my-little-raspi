@@ -1,21 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const nodeSSH = require('../my_modules/myNodeSSH');
+const { exec } = require('child_process');
+const { verifyToken } = require('../my_middleware/authorization')
 
-router.post('/command',async (req,res)=>{
+router.post('/command',verifyToken, async (req,res)=>{
     try {
-        const command = req.body.command;
-        const ssh = await nodeSSH.connection();
-        const result = await ssh.execCommand(command);
+        console.log(req.body)
+        const execResult = await exec(req.body.command);
+        console.log(execResult);
         res.status(200).json({
-            result:result.stdout
+            stdout: execResult.stdout,
+            stderr: execResult.stderr,
         })
     }
     catch(err) {
         console.log(err);
-        res.status(400).json({
-            data: null
-        })
+        res.status(400).json({ message:"exec failed", data: "" })
     }
 });
 

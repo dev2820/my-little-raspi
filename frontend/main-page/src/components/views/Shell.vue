@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ShellClient from '@/components/container/SSHclient.vue'
+import ShellClient from '@/components/container/ShellClient.vue'
 export default {
     name:"Shell",
     data() {

@@ -5,22 +5,22 @@ export default {
     login(state, payload) {
         console.log(payload.id,payload.password);
     },
-    unshiftSSHlogs(state,payload) {
+    unshiftShellLogs(state,payload) {
         //log length가 일정 이상보다 커지면 하나씩 pop하도록 수정
-        state['SSHlogs'].unshift(payload);
+        state['ShellLogs'].unshift(payload);
     },
-    shiftSSHlogs(state) {
-        state['SSHlogs'].shift();
+    shiftShellLogs(state) {
+        state['ShellLogs'].shift();
     },
-    pushSSHlogs(state,payload) {
+    pushShellLogs(state,payload) {
         //log length가 일정 이상보다 커지면 하나씩 pop하도록 수정
-        state['SSHlogs'].push(payload);
+        state['ShellLogs'].push(payload);
     },
-    popSSHlogs(state,payload) {
-        state['SSHlogs'].pop();
+    popShellLogs(state,payload) {
+        state['ShellLogs'].pop();
     },
-    clearSSHlogs(state) {
-        state['SSHlogs'] = [];
+    clearShellLogs(state) {
+        state['ShellLogs'] = [];
     },
     unshiftCommandCache(state,payload) {
         state['commandCache'].unshift(payload);
