@@ -2,15 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { exec } = require('child_process');
 const { verifyToken } = require('../my_middleware/authorization')
-
+let cwd = "~"
 router.post('/command',verifyToken, async (req,res)=>{
     try {
-        console.log(req.body)
-        const execResult = await exec(req.body.command);
-        console.log(execResult);
+        const { stdout, stderr } = await exec(req.body.command,{ cwd: "~" });
         res.status(200).json({
-            stdout: execResult.stdout,
-            stderr: execResult.stderr,
+            stdout,
+            stderr,
         })
     }
     catch(err) {
