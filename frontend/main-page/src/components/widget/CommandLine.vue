@@ -30,7 +30,7 @@ export default {
             return this.log.command.split('\r\n')
         },
         responseHtml(){
-            return this.log.stdout.replace(/\n/g, "<br/>") 
+            return this.log.stdout.toString().replace(/\n/g, "<br/>") 
         }
     }
 }
